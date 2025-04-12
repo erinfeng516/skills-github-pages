@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>課程報名系統</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <div class="min-h-screen flex flex-col">
+        <!-- 頁首 -->
+        <header class="bg-white shadow-sm">
+            <div class="max-w-4xl mx-auto px-4 py-6 flex justify-between items-center">
+                <h1 class="text-xl font-medium text-gray-800">空中英語教室</h1>
+                <div class="text-sm text-gray-600">線上課程報名</div>
+            </div>
+        </header>
+
+ <!-- 主要內容 -->
+        <main class="flex-grow">
+            <div class="max-w-4xl mx-auto px-4 py-8">
+                <!-- 課程資訊卡 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h2 class="text-2xl font-bold text-gray-800">提升課堂互動的AI工具箱</h2>
+                                <p class="text-gray-500 mt-1">空中英語教室</p>
+                            </div>
+                            <div class="bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+                                免費
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 space-y-3">
+                            <div class="flex items-center text-gray-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span>2025年4月15日 (週二) 14:00-15:00</span>
+                            </div>
+                            <div class="flex items-center text-gray-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                <span>Zoom線上會議教室</span>
+                            </div>
+                            <div class="flex items-center text-gray-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                                <span>名額上限：<span id="max-seats">100</span>人，剩餘：<span id="remaining-seats">78</span>人</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 報名進度條 -->
+                        <div class="mt-6">
+                            <div class="flex justify-between text-xs text-gray-500 mb-1">
+                                <span>報名進度</span>
+                                <span><span id="progress-percentage">22</span>%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full progress-bar" id="progress-bar" style="width: 22%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 課程簡介 -->
+                    <div class="border-t border-gray-100 px-6 py-4">
+                        <h3 class="text-lg font-medium text-gray-800 mb-2">課程簡介</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            本課程專為教育工作者設計，介紹各種能夠提升課堂互動性的AI工具。我們將探討如何運用人工智慧技術來增強教學效果、提高學生參與度，以及簡化教學準備工作。無論您是資深教師還是剛開始教學生涯，這些工具都能幫助您創造更加生動有趣的學習環境。
+                        </p>
+                    </div>
+                </div>
+
+ <!-- 報名表單 -->
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6">課程報名</h3>
+                        
+                        <!-- 使用 Formspree 處理表單提交 -->
+                        <form id="registration-form" action="https://formspree.io/f/feng.erin@gmail.com" method="POST" class="space-y-6">
+                            <!-- 隱藏欄位：課程名稱 -->
+                            <input type="hidden" name="課程名稱" value="提升課堂互動的AI工具箱">
+                            
+                            <!-- 基本資料 -->
+                            <div class="space-y-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">姓名 <span class="text-red-500">*</span></label>
+                                        <input type="text" id="name" name="姓名" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                    </div>
+                                    <div>
+                                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">聯絡電話 <span class="text-red-500">*</span></label>
+                                        <input type="tel" id="phone" name="聯絡電話" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">電子郵件 <span class="text-red-500">*</span></label>
+                                    <input type="email" id="email" name="電子郵件" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                </div>
+                                
+                                <div>
+                                    <label for="company" class="block text-sm font-medium text-gray-700 mb-1">學校系所</label>
+                                    <input type="text" id="company" name="學校系所" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                </div>
+                                
+                                <div>
+                                    <label for="job-title" class="block text-sm font-medium text-gray-700 mb-1">職稱</label>
+                                    <input type="text" id="job-title" name="職稱" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                </div>
+                            </div>
+
+<!-- 參與資訊 -->
+                            <div>
+                                <h4 class="text-lg font-medium text-gray-800 mb-3">參與資訊</h4>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">您是如何得知此課程？</label>
+                                        <div class="flex flex-wrap gap-4">
+                                            <label class="flex items-center">
+                                                <input type="radio" name="得知管道" value="電子郵件" checked class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                                <span class="ml-2 text-gray-700">電子郵件</span>
+                                            </label>
+                                            <label class="flex items-center">
+                                                <input type="radio" name="得知管道" value="社群媒體" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                                <span class="ml-2 text-gray-700">社群媒體</span>
+                                            </label>
+                                            <label class="flex items-center">
+                                                <input type="radio" name="得知管道" value="同事推薦" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                                <span class="ml-2 text-gray-700">同事推薦</span>
+                                            </label>
+                                            <label class="flex items-center">
+                                                <input type="radio" name="得知管道" value="其他" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                                <span class="ml-2 text-gray-700">其他</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="other-source-field" class="hidden">
+                                        <label for="other-source" class="block text-sm font-medium text-gray-700 mb-1">請說明</label>
+                                        <input type="text" id="other-source" name="其他管道說明" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 其他需求 -->
+                            <div>
+                                <label for="special-needs" class="block text-sm font-medium text-gray-700 mb-1">您希望在課程中了解的特定AI工具或問題</label>
+                                <textarea id="special-needs" name="特定需求" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></textarea>
+                            </div>
+                            
+                            <!-- 同意條款 -->
+                            <div>
+                                <label class="flex items-start">
+                                    <input type="checkbox" required class="h-4 w-4 mt-1 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                    <span class="ml-2 text-sm text-gray-600">
+                                        我已閱讀並同意<a href="#" class="text-blue-600 hover:underline">課程報名條款</a>與<a href="#" class="text-blue-600 hover:underline">隱私權政策</a>
+                                    </span>
+                                </label>
+                            </div>
+                            
+                            <!-- 提交按鈕 -->
+                            <div>
+                                <button type="submit" id="submit-btn" class="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition font-medium">
+                                    確認報名
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+<!-- 頁尾 -->
+        <footer class="bg-white border-t border-gray-200 mt-8">
+            <div class="max-w-4xl mx-auto px-4 py-6">
+                <div class="text-center text-gray-500 text-sm">
+                    © 2025 空中英語教室. 保留所有權利.
+                </div>
+            </div>
+        </footer>
+        
+        <!-- 報名成功彈窗 -->
+        <div id="success-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+            <div class="bg-white rounded-lg p-8 max-w-md w-full relative z-10 mx-4">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
+                        <svg class="h-8 w-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-medium text-gray-900 mb-2">報名成功！</h3>
+                    <p class="text-gray-600 mb-6">
+                        感謝您報名「提升課堂互動的AI工具箱」，我們已發送報名確認信至您的電子郵件信箱。課程連結將在活動前一天寄送給您。
+                    </p>
+                    <button id="close-modal" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition">
+                        關閉
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+        // 處理「其他」選項顯示
+        const sourceRadios = document.querySelectorAll('input[name="得知管道"]');
+        const otherSourceField = document.getElementById('other-source-field');
+        
+        sourceRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === '其他') {
+                    otherSourceField.classList.remove('hidden');
+                } else {
+                    otherSourceField.classList.add('hidden');
+                }
+            });
+        });
+        
+        // 處理表單提交
+        const form = document.getElementById('registration-form');
+        const successModal = document.getElementById('success-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const remainingSeats = document.getElementById('remaining-seats');
+        const progressBar = document.getElementById('progress-bar');
+        const progressPercentage = document.getElementById('progress-percentage');
+        const maxSeats = parseInt(document.getElementById('max-seats').textContent);
+        
+        form.addEventListener('submit', function(e) {
+            // 不阻止表單提交，讓它發送到Formspree
+            // 但我們仍然更新UI
+            
+            // 更新剩餘名額和進度條
+            const currentRemaining = parseInt(remainingSeats.textContent);
+            if (currentRemaining > 0) {
+                const newRemaining = currentRemaining - 1;
+                remainingSeats.textContent = newRemaining;
+                
+                const takenSeats = maxSeats - newRemaining;
+                const newPercentage = Math.round((takenSeats / maxSeats) * 100);
+                progressBar.style.width = newPercentage + '%';
+                progressPercentage.textContent = newPercentage;
+            }
+            
+            // 顯示成功彈窗 (在表單提交後)
+            setTimeout(() => {
+                successModal.classList.remove('hidden');
+            }, 1000);
+        });
+        
+        // 關閉成功彈窗
+        closeModalBtn.addEventListener('click', function() {
+            successModal.classList.add('hidden');
+        });
+        
+        // 點擊彈窗背景也可以關閉
+        successModal.addEventListener('click', function(e) {
+            if (e.target === successModal) {
+                successModal.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
